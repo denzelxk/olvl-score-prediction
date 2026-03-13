@@ -1,0 +1,75 @@
+# =============================================================================
+# config.yaml  —  Student Score Prediction Pipeline
+# =============================================================================
+# All pipeline parameters are controlled here.
+# Run the pipeline with:
+#   bash run.sh                                   # default model (gradient_boosting)
+#   bash run.sh --model all                        # train all three models
+#   bash run.sh --model ridge                      # train Ridge only
+#   bash run.sh --model random_forest              # train RF only
+#   bash run.sh --model gradient_boosting          # train GB only
+#   bash run.sh --config config.yaml --db-path data/score.db
+# =============================================================================
+
+# --- Data -------------------------------------------------------------------
+data:
+  # Relative path to the SQLite database. Must contain a table with the
+  # 18-column student dataset. Do NOT submit score.db with your submission.
+  db_path: data/score.db
+
+# --- Train / Test Split -----------------------------------------------------
+train:
+  test_size:   0.20          # fraction of data held out for final evaluation
+  random_state: 42           # seed for reproducibility
+  cv_folds:    5             # number of folds used in cross-validation
+  # Score band boundaries used for stratified splitting.
+  # Ensures the Fail band (<50, ~14% of data) is proportionally represented.
+  stratify_bins: [0, 50, 60, 70, 80, 100]
+
+# --- Default model ----------------------------------------------------------
+# Model trained when --model flag is not provided on the command line.
+# Options: ridge | random_forest | gradient_boosting | all
+default_model: gradient_boosting
+
+# --- Model Hyperparameters --------------------------------------------------
+# Values here override the locked prototype defaults in src/models.py.
+# Modify to experiment with different configurations.
+models:
+
+  ridge:
+    # RidgeCV selects the best alpha via internal cross-validation.
+    alphas: [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+    cv: 5
+    # Prototype result: best alpha = 10.0, Test RMSE = 8.98, R² = 0.588
+    # Role: interpretable linear baseline; quantifies the non-linearity premium
+
+  random_forest:
+    # Tuned via RandomizedSearchCV (30 iterations) in prototype.ipynb §3b.
+    # min_samples_leaf=1 confirmed globally optimal by focused sweep §3b-ii
+    # (CV RMSE monotonically degrades as min_samples_leaf increases 1→10).
+    n_estimators:     326
+    max_depth:        15
+    max_features:     0.5    # 8 of 16 features per split (better than sqrt=4 for small feature sets)
+    min_samples_leaf: 1
+    n_jobs:           -1     # use all CPU cores
+    random_state:     42
+    # Prototype result: CV RMSE = 5.3597, Test RMSE = 5.35, R² = 0.854
+
+  gradient_boosting:
+    # Tuned via RandomizedSearchCV (50 iterations) in prototype.ipynb §3d.
+    # v2 params selected over v3 (5.3456 vs 5.3406): improvement of 0.005
+    # is within CV noise (0.11x SEM); v2 has tighter regularisation
+    # (min_samples_leaf=6 vs 2) making it more robust to distribution shift.
+    n_estimators:     548
+    learning_rate:    0.01
+    max_depth:        8
+    min_samples_leaf: 6
+    subsample:        0.8    # stochastic GB: 80% of training samples per round
+    random_state:     42
+    # Prototype result: CV RMSE = 5.3456, Test RMSE ~5.35, R² ~0.854
+    # PRIMARY MODEL: best CV RMSE, smallest overfit gap (~0.75 vs RF's 2.20)
+
+# --- Output -----------------------------------------------------------------
+output:
+  models_dir:  models     # fitted pipelines saved as {name}.pkl via joblib
+  results_dir: results    # results.csv written after each run

@@ -1,0 +1,4 @@
+Model,Train RMSE,Test RMSE,CV RMSE,CV RMSE std,Train MAE,Test MAE,Train R2,Test R2,Overfit Gap
+Ridge Regression (RidgeCV),9.1171,8.9819,9.1312,0.1105,7.305,7.1297,0.5749,0.588,0.1353
+Random Forest Regressor,3.1434,5.3475,5.3597,0.1039,2.1358,3.699,0.9495,0.854,-2.2041
+Gradient Boosting Regressor,4.3575,5.2794,5.3465,0.0941,3.0208,3.6936,0.9029,0.8577,-0.9219

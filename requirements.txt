@@ -1,0 +1,9 @@
+# requirements.txt
+# Student Score Prediction Pipeline — AIAP Technical Assessment
+# Install with: pip install -r requirements.txt
+
+scikit-learn>=1.4.0   # root_mean_squared_error requires >=1.4; sparse_output on OHE requires >=1.2
+pandas>=1.5.0
+numpy>=1.23.0
+pyyaml>=6.0           # config.yaml parsing
+joblib>=1.2.0         # model serialisation (ships with sklearn but pinned explicitly)
