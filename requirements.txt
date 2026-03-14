@@ -3,7 +3,13 @@
 # Install with: pip install -r requirements.txt
 
 scikit-learn>=1.4.0   # root_mean_squared_error requires >=1.4; sparse_output on OHE requires >=1.2
-pandas>=1.5.0
-numpy>=1.23.0
+pandas>=2.0.0
+numpy>=1.26.0
 pyyaml>=6.0           # config.yaml parsing
-joblib>=1.2.0         # model serialisation (ships with sklearn but pinned explicitly)
+joblib>=1.3.0        # model serialisation (ships with sklearn but pinned explicitly)
+
+# for the app
+streamlit>=1.33.0
+scikit-learn>=1.4.0
+plotly>=5.20.0
+sqlalchemy>=2.0.0
