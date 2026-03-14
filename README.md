@@ -4,7 +4,7 @@ A deployed machine learning web app that predicts secondary school exam scores
 from student behavioral and demographic data — helping educators identify
 at-risk students and simulate targeted interventions.
 
-🔗 **[Live Demo →](https://your-app.streamlit.app)**
+🔗 **[Live Demo →](https://olvl-score-prediction.streamlit.app)**
 
 ![App Screenshot](docs/dashboard_screenshot.png)
 
