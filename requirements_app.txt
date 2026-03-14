@@ -1,0 +1,17 @@
+# requirements_app.txt
+# Web application dependencies — install separately from the ML pipeline.
+# Usage: pip install -r requirements_app.txt
+#
+# src/ dependencies (scikit-learn, pandas, numpy, joblib) are shared.
+# Install both files for a full environment:
+#   pip install -r requirements.txt -r requirements_app.txt
+
+streamlit>=1.32.0
+plotly>=5.18.0
+
+# Already in requirements.txt but listed here for standalone app installs
+scikit-learn>=1.4.0
+pandas>=1.5.0
+numpy>=1.23.0
+joblib>=1.2.0
+pyyaml>=6.0
