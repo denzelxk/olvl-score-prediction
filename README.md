@@ -55,22 +55,36 @@ Key predictive features: `attendance_rate`, `hours_per_week`,
 
 ---
 
-## Project Structure
+## Folder Structure
 
 ```
+.
+├── data/                   
+│   └── score.db
+├── src/
+│   ├── data_loader.py       
+│   ├── preprocessor.py      
+│   ├── models.py            
+│   ├── evaluate.py         
+│   └── run.py   
 ├── app/
-│ ├── pages/
-│ │ ├── 1_predict.py
-│ │ ├── 2_dashboard.py
-│ │ └── 3_what_if.py
-│ └── utils/
-│ ├── charts.py
-│ ├── loader.py
-│ └── data_loader.py
+│   ├── pages/
+│   │   ├── 1_predict.py
+│   │   ├── 2_dashboard.py
+│   │   ├── 3_what_if.py
+│   │   └── 4_model_info.py
+│   └── utils/
+│       ├── charts.py
+│       ├── loader.py
+│       └── data_loader.py
 ├── models/ # Serialised .pkl pipelines
-├── data/
-│ └── score.csv
-├── requirements.txt
+├── info/
+│   ├── eda.ipynb       
+│   ├── requirements_app.txt             
+│   └── README.md     
+├── config.yaml              
+├── run.sh                  
+├── requirements.txt         
 └── README.md
 ```
 
